@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# This script will invoke mmark to convert markdown to xml2rfc format,
+# then it will invoke xml2rfc to produce an outout text file
+#
+# The name of the .md file (with the .md extension) is expected as the first
+# argument.
+#
+
+MDFILE=$1
+XMLFILE=$(echo $MDFILE | sed 's/\.md$/.xml/')
+TXTFILE=$(echo $MDFILE | sed 's/\.md$/.txt/')
+
+if [ x"$MDFILE" == x"$XMLFILE" ] ; then
+    echo "usage: md2rfc <draft_name.md>"
+    exit 1;
+else
+    mmark -xml2 -page "$MDFILE" "$XMLFILE" && \
+      xml2rfc --text "$XMLFILE" -o "$TXTFILE"
+fi
