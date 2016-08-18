@@ -25,6 +25,7 @@
     surname = "Jones"
     fullname = "Paul E. Jones"
     organization = "Packetizer, Inc."
+    abbrev = "Packetizer"
       [author.address]
       email = "paulej@packetizer.com"
       phone = "+1 919 647 9450"
