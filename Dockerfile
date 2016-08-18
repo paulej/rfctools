@@ -6,7 +6,7 @@ FROM fedora:24
 MAINTAINER Paul E. Jones <paulej@packetizer.com>
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
-RUN dnf install -y python python-lxml golang golang-github-BurntSushi-toml \
+RUN dnf -y install python python-lxml golang golang-github-BurntSushi-toml \
         golang-github-BurntSushi-toml-devel git && \
     dnf clean all
 
