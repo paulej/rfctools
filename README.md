@@ -2,8 +2,7 @@
 
 This repository builds a docker image that has various tools for creating Internet Drafts.  In the current release, both the xml2rfc and mmark tools are available when running docker against this image.
 
-You can grab the pre-build docker image from Docker Hub or build it using the Dockerfile here.  The image in Docker Hub is named
-"paulej/rfctools".
+You can grab the pre-built docker image from Docker Hub or build it using the Dockerfile here.  The image in Docker Hub is named "paulej/rfctools".
 
 # Executing Commands
 
@@ -33,23 +32,21 @@ To make it easier, there is a script called "md2rfc" that will execute both comm
   $ docker run --rm --user=$(id -u):$(id -g) -v $(pwd):/rfc -v $HOME/.cache/xml2rfc:/var/cache/xml2rfc -w /rfc paulej/rfctools md2rfc draft-jones-markdown-example-00.md
 ```
 
-Since these commands are lengthy, it is perhaps best to use them in conjunction with a Makefile.  An example Makefile is provided in the "example" directory.
+Since these commands are lengthy, it is perhaps best to put them in a Makefile.  An example Makefile is provided in the "example" directory.
 
 # Cache files for xml2rfc
 
 As noted in the previous section, cached xml2rfc files are stored in /var/cache/xml2rfc/ when run inside the docker container, which is mapped to $HOME/.cache/xml2rfc on the local file system.  Without mapping the local filesystem's cache directory via the -w switch, any cache files created would be discarded each time "docker run" completes.
 
-As an alternative to mapping $HOME/.cache/xml2rfc, one might place the cache directory in the same directory where your source files are located.  For example, one could create a directory called ".cache-xml2rfc" in the current directory and invoke a slightly modify command:
+As an alternative to mapping $HOME/.cache/xml2rfc, one might place the cache directory in the same directory where your source files are located.  For example, one could create a directory called ".cache-xml2rfc" in the current directory and invoke a slightly modified command:
 
 ```
   $ mkdir .cache-xml2rfc
   $ docker run --rm --user=$(id -u):$(id -g) -v $(pwd):/rfc -v $(pwd)/.cache-xml2rfc:/var/cache/xml2rfc -w /rfc paulej/rfctools md2rfc draft-jones-markdown-example-00.md
 ```
 
-The cache directory can be placed anywhere.  The only important consideration is to ensure that the cache directory is accessible whenever invoking xml2rfc, mapping whatever chosen directory to /var/cache/xml2rfc in the docker container. 
+The cache directory can be placed anywhere.  The only important consideration is to ensure that the cache directory is accessible whenever invoking xml2rfc, mapping whatever chosen directory to /var/cache/xml2rfc in the docker container.
 
 # Example with a Makefile
 
-In the "example" directory, there is a Makefile that will create the $HOME/.cache/xml2fc directory and then run the "md2rfc" script inside a docker container.  You can place any number of .md files in the directory with this Makefile and it will build all of them.  It was intended to highlight just how easy it is to use docker to invoke mmark and xml2rfc via the docker container.  Feel free to modify that Makefile to meet your particular needs.
-
-As an aside, the example Makefile opts for the approach of mapping $HOME/.cache/xml2rfc for caching to get the benefits of using the cache with multiple different drafts that might be located in different directories or repositories.
+As noted above, in the "example" directory there is a Makefile that will create the $HOME/.cache/xml2fc directory and then run the "md2rfc" script inside a running docker container.  You can place any number of .md files in the directory with this Makefile and it will build all of them.  It was intended to highlight just how easy it is to use docker to invoke mmark and xml2rfc via the docker container.  Feel free to modify that Makefile to meet your particular needs.
