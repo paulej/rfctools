@@ -46,7 +46,7 @@
 .# Abstract
 
 This document serves as an example markdown document for use with mmark
-and the rfctools docker container.
+and the rfctools docker image.
 
 {mainmatter}
 
@@ -55,9 +55,10 @@ and the rfctools docker container.
 Since installing and configuring both xml2rfc and mmark can require
 a bit of head scratching and the process is easily forgotten after a
 span of months when a new update is available, the xmltools docker
-container can help make like a little easier.
+image can help make life a little easier.
 
-This file is an example of how to use that container.
+This file is used to illustrate how to create an IETF draft from
+markdown (using mmark's syntax) via a docker container.
 
 # Conventions Used In This Document
 
