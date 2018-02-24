@@ -2,7 +2,7 @@
 # rfctools Docker File
 #
 
-FROM fedora:25
+FROM fedora:27
 MAINTAINER Paul E. Jones <paulej@packetizer.com>
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
