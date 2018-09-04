@@ -1,9 +1,12 @@
 #
 # rfctools Docker File
+# Copyright (C) 2018
+# Paul E. Jones <paulej@packetizer.com>
 #
 
-FROM fedora:27
-MAINTAINER Paul E. Jones <paulej@packetizer.com>
+FROM fedora:28
+LABEL maintainer="paulej@packetizer.com"
+LABEL description="Docker container that houses RFC tools for creating Internet Drafts from mmark markdown documents"
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
 RUN dnf -y install python python-lxml golang golang-github-BurntSushi-toml \
@@ -17,12 +20,12 @@ RUN pip install --upgrade pip && \
 
 # Clone the mmark repository and build the mmark binary
 ENV GOPATH /usr/share/gocode
-RUN git clone --depth=1 --branch=master https://github.com/miekg/mmark.git \
-        /usr/share/gocode/src/github.com/miekg/mmark && \
-    rm -fr /usr/share/gocode/src/github.com/miekg/mmark/.git && \
-    cd /usr/share/gocode/src/github.com/miekg/mmark/mmark/ && \
-    go build && \
-    ln -s /usr/share/gocode/src/github.com/miekg/mmark/mmark/mmark \
+RUN git clone --depth=1 --branch=master https://github.com/mmarkdown/mmark.git \
+        /usr/share/gocode/src/github.com/mmarkdown/mmark && \
+    rm -fr /usr/share/gocode/src/github.com/mmarkdown/mmark/.git && \
+    cd /usr/share/gocode/src/github.com/mmarkdown/mmark/ && \
+    go get && go build && \
+    ln -s /usr/share/gocode/src/github.com/mmarkdown/mmark/mmark \
         /usr/bin/mmark
 
 # Put the md2rfc script in place

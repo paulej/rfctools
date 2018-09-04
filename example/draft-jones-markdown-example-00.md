@@ -5,17 +5,22 @@
     # (draft-jones-markdown-example)
     #
     # Generation tool chain:
-    #   mmark (https://github.com/miekg/mmark)
+    #   mmark (https://github.com/mmarkdown/mmark/)
     #   xml2rfc (http://xml2rfc.ietf.org/)
     #
 
     Title = "Example Markdown Draft"
     abbrev = "Markdown Example"
-    category = "std"
-    docName = "draft-jones-markdown-example-00"
     ipr= "trust200902"
     area = "Internet"
+    workgroup = ""
     keyword = ["Markdown", "mmark", "rfc", "rfctools"]
+
+    [seriesInfo]
+    status = "standard"
+    name = "Internet-Draft"
+    value = "draft-jones-markdown-example-00"
+    stream = "IETF"
 
     [pi]
     subcompact = "yes"

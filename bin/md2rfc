@@ -23,7 +23,7 @@ while [ $# -gt 0 ] ; do
         echo "Error: $MDFILE is not a .md file"
         exit 1
     else
-        mmark -xml2 -page "$MDFILE" "$XMLFILE" && \
+        mmark -2 "$MDFILE" > "$XMLFILE" && \
           xml2rfc --text "$XMLFILE" -o "$TXTFILE"
     fi
 done

@@ -5,9 +5,9 @@
 
 SRC  := $(wildcard draft-*.md)
 TXT  := $(patsubst %.md,%.txt,$(SRC))
-UID  := `id -u`
-GID  := `id -g`
-CWD  := `pwd`
+UID  := $(shell id -u)
+GID  := $(shell id -g)
+CWD  := $(shell pwd)
 
 # Ensure the xml2rfc cache directory exists locally
 IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
