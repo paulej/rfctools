@@ -1,6 +1,6 @@
 # RFC Tools
 
-This repository builds a docker image that has various tools for creating Internet Drafts.  In the current release, both the xml2rfc and mmark tools are available when running docker using the docker image created with the included Dockerfile.
+This repository builds a docker image that has various tools for creating Internet Drafts.  In the current release, both the [xml2rfc](https://xml2rfc.tools.ietf.org/) and [mmark](https://github.com/mmarkdown/mmark) tools are available when running docker using the docker image created with the included Dockerfile.
 
 You can grab the pre-built docker image from Docker Hub or build it using the Dockerfile here.  The image in Docker Hub is named "paulej/rfctools".
 
