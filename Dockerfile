@@ -6,7 +6,7 @@
 
 FROM fedora:28
 LABEL maintainer="paulej@packetizer.com"
-LABEL description="Docker container that houses RFC tools for creating Internet Drafts from mmark markdown documents"
+LABEL description="Docker image that houses RFC tools for creating Internet Drafts from mmark markdown documents"
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
 RUN dnf -y install python python-lxml golang golang-github-BurntSushi-toml \
