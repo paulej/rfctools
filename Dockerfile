@@ -15,7 +15,7 @@ RUN dnf -y install python python-lxml golang golang-github-BurntSushi-toml \
 
 # Update pip and install xml2rfc, creating the default cache directory
 RUN pip install --upgrade pip && \
-    pip install xml2rfc && \
+    pip install xml2rfc==2.44.0 pycountry==19.8.18 && \
     mkdir -p /var/cache/xml2rfc
 
 # Clone the mmark repository and build the mmark binary

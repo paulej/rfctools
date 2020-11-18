@@ -18,12 +18,14 @@ while [ $# -gt 0 ] ; do
     shift
     XMLFILE=$(echo $MDFILE | sed 's/\.md$/.xml/')
     TXTFILE=$(echo $MDFILE | sed 's/\.md$/.txt/')
+    HTMLFILE=$(echo $MDFILE | sed 's/\.md$/.html/')
 
     if [ x"$MDFILE" == x"$XMLFILE" ] ; then
         echo "Error: $MDFILE is not a .md file"
         exit 1
     else
-        mmark -2 "$MDFILE" > "$XMLFILE" && \
-          xml2rfc --text "$XMLFILE" -o "$TXTFILE"
+        mmark "$MDFILE" > "$XMLFILE" && \
+          xml2rfc --v3 --text "$XMLFILE" -o "$TXTFILE" && \
+          xml2rfc --v3 --html "$XMLFILE" -o "$HTMLFILE"
     fi
 done
