@@ -1,16 +1,16 @@
 #
 # rfctools Docker File
-# Copyright (C) 2018
+# Copyright (C) 2018-2021
 # Paul E. Jones <paulej@packetizer.com>
 #
 
-FROM fedora:28
+FROM fedora:34
 LABEL maintainer="paulej@packetizer.com"
 LABEL description="Docker image that houses RFC tools for creating Internet Drafts from mmark markdown documents"
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
-RUN dnf -y install python python-lxml golang golang-github-BurntSushi-toml \
-        golang-github-BurntSushi-toml-devel git && \
+RUN dnf -y install python python-lxml golang golang-github-burntsushi-toml \
+        golang-github-burntsushi-toml-devel git && \
     dnf clean all
 
 # Update pip and install xml2rfc, creating the default cache directory
