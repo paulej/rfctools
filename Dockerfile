@@ -5,8 +5,10 @@
 #
 
 FROM fedora:34
-LABEL maintainer="paulej@packetizer.com"
-LABEL description="Docker image that houses RFC tools for creating Internet Drafts from mmark markdown documents"
+LABEL org.opencontainers.image.authors="paulej@packetizer.com"
+LABEL org.opencontainers.image.description="Docker image that houses RFC tools for creating Internet Drafts from mmark markdown documents"
+LABEL org.opencontainers.image.source="https://github.com/paulej/rfctools"
+LABEL org.opencontainers.image.licenses="MIT"
 
 # Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
 RUN dnf -y install python python-lxml golang golang-github-burntsushi-toml \
@@ -25,8 +27,7 @@ RUN git clone --depth=1 --branch=master https://github.com/mmarkdown/mmark.git \
     rm -fr /usr/share/gocode/src/github.com/mmarkdown/mmark/.git && \
     cd /usr/share/gocode/src/github.com/mmarkdown/mmark/ && \
     go get && go build && \
-    ln -s /usr/share/gocode/src/github.com/mmarkdown/mmark/mmark \
-        /usr/bin/mmark
+    ln -s /usr/share/gocode/src/github.com/mmarkdown/mmark/mmark /usr/bin/mmark
 
 # Put the md2rfc script in place
 COPY bin/md2rfc /usr/bin/

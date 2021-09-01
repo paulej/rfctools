@@ -1,3 +1,2 @@
-.git/
-example/
-README.md
+*
+!bin/
