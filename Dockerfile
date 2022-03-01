@@ -4,18 +4,36 @@
 # Paul E. Jones <paulej@packetizer.com>
 #
 
+# Build an intermediate container for mmark
+FROM fedora:35 as mmark_builder
+RUN dnf -y update --refresh && \
+    dnf -y install golang golang-github-burntsushi-toml \
+        golang-github-burntsushi-toml-devel git && \
+    dnf clean all
+
+# Clone the mmark repository and build the mmark binary
+ENV GOPATH /usr/share/gocode
+RUN git clone --branch=v2.2.25 https://github.com/mmarkdown/mmark.git \
+        /usr/share/gocode/src/github.com/mmarkdown/mmark && \
+    cd /usr/share/gocode/src/github.com/mmarkdown/mmark/ && \
+    go get && go build
+
+# Build the rfctools container
 FROM fedora:35
 LABEL org.opencontainers.image.authors="paulej@packetizer.com"
 LABEL org.opencontainers.image.description="Docker image that houses RFC tools for creating Internet Drafts from mmark markdown documents"
 LABEL org.opencontainers.image.source="https://github.com/paulej/rfctools"
 LABEL org.opencontainers.image.licenses="MIT"
 
-# Install binaries from Fedora needed for golang, python, xml2rfc, and mmark
-RUN dnf -y install golang golang-github-burntsushi-toml curl unzip \
-        golang-github-burntsushi-toml-devel git \
-        python3 python3-pip python3-lxml python3-wheel \
-        python3-cairo cairo pango gdk-pixbuf2 && \
+# Install binaries from Fedora needed for xml2rfc
+RUN dnf -y update --refresh && \
+    dnf -y install curl unzip python3 python3-pip python3-lxml python3-wheel \
+        python3-cairo cairo pango gdk-pixbuf2 findutils make && \
     dnf clean all
+
+# Copy the mmark binary to the /usr/bin directory
+COPY --from=mmark_builder \
+    /usr/share/gocode/src/github.com/mmarkdown/mmark/mmark /usr/bin/mmark
 
 # Update pip and install xml2rfc, creating the default cache directory
 RUN pip install --upgrade pip && \
@@ -39,16 +57,6 @@ RUN curl https://noto-website-2.storage.googleapis.com/pkgs/Noto-unhinted.zip \
     rm -f /tmp/roboto.zip && \
     find /usr/share/fonts/roboto -exec chmod o+r {} \; && \
     fc-cache -f -v
-
-# Clone the mmark repository and build the mmark binary
-ENV GOPATH /usr/share/gocode
-RUN git clone --branch=v2.2.25 https://github.com/mmarkdown/mmark.git \
-        /usr/share/gocode/src/github.com/mmarkdown/mmark && \
-    cd /usr/share/gocode/src/github.com/mmarkdown/mmark/ && \
-    go get && go build && \
-    cp /usr/share/gocode/src/github.com/mmarkdown/mmark/mmark /usr/bin/ && \
-    rm -fr /root/.cache && \
-    rm -fr /usr/share/gocode/src/
 
 # Put the md2rfc script in place
 COPY bin/md2rfc /usr/bin/
