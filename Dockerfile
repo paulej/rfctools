@@ -56,6 +56,8 @@ RUN curl https://noto-website-2.storage.googleapis.com/pkgs/Noto-unhinted.zip \
     unzip -d /usr/share/fonts/roboto /tmp/roboto.zip && \
     rm -f /tmp/roboto.zip && \
     find /usr/share/fonts/roboto -exec chmod o+r {} \; && \
+    mkdir -p /.fontconfig && \
+    find /.fontconfig -exec chmod o+w {} \; \
     fc-cache -f -v
 
 # Put the md2rfc script in place
