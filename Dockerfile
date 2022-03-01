@@ -25,13 +25,19 @@ RUN pip install --upgrade pip && \
     mkdir -p /var/cache/xml2rfc && \
     chmod 777 /var/cache/xml2rfc
 
-# Get font files
+# Get Noto and Roboto fonts files (per the xml2rfc instructions)
 RUN curl https://noto-website-2.storage.googleapis.com/pkgs/Noto-unhinted.zip \
          >/tmp/noto.zip && \
     mkdir -p /usr/share/fonts/noto && \
     unzip -d /usr/share/fonts/noto /tmp/noto.zip && \
     rm -f /tmp/noto.zip && \
     chmod o+r /usr/share/fonts/noto/* && \
+    curl https://fonts.google.com/download?family=Roboto%20Mono \
+        >/tmp/roboto.zip && \
+    mkdir -p /usr/share/fonts/roboto && \
+    unzip -d /usr/share/fonts/roboto /tmp/roboto.zip && \
+    rm -f /tmp/roboto.zip && \
+    find /usr/share/fonts/roboto -exec chmod o+r {} \; && \
     fc-cache -f -v
 
 # Clone the mmark repository and build the mmark binary
