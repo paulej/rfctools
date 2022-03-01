@@ -12,18 +12,23 @@ if [ $# -eq 0 ] ; then
     exit 1;
 fi
 
-# Loop through all of the specified .md files to produce .txt files as output
+# Loop through all of the specified .md files to produce .txt and .pdf files
+# as output
 while [ $# -gt 0 ] ; do
     MDFILE=$1
     shift
     XMLFILE=$(echo $MDFILE | sed 's/\.md$/.xml/')
     TXTFILE=$(echo $MDFILE | sed 's/\.md$/.txt/')
+    PDFFILE=$(echo $MDFILE | sed 's/\.md$/.pdf/')
+    HTMLFILE=$(echo $MDFILE | sed 's/\.md$/.html/')
 
     if [ x"$MDFILE" == x"$XMLFILE" ] ; then
         echo "Error: $MDFILE is not a .md file"
         exit 1
     else
         mmark "$MDFILE" > "$XMLFILE" && \
-          xml2rfc --v3 --text "$XMLFILE" -o "$TXTFILE"
+          xml2rfc --v3 --text "$XMLFILE" -o "$TXTFILE" && \
+          xml2rfc --v3 --pdf "$XMLFILE" -o "$PDFFILE" && \
+          xml2rfc --v3 --html "$XMLFILE" -o "$HTMLFILE"
     fi
 done
